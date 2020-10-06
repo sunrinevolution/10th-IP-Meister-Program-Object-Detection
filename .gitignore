@@ -130,3 +130,7 @@ dmypy.json
 
 # DS Store
 **/.DS_Store
+
+# yolo weights
+*.weights
+*.h5
