@@ -11,12 +11,14 @@ flags.DEFINE_string('classes', './data/coco.names', 'path to classes file')
 flags.DEFINE_string('weights', './checkpoints/yolov3.tf', 'path to weights file')
 flags.DEFINE_boolean('tiny', False, 'yolov3 or yolov3-tiny')
 flags.DEFINE_integer('size', 416, 'resize images to')
+flags.DEFINE_string('video', '0', 'path to video file or number for webcam)')
 flags.DEFINE_string('output', None, 'path to output video')
 flags.DEFINE_string('output_format', 'XVID', 'codec used in VideoWriter when saving video to file')
 flags.DEFINE_integer('num_classes', 80, 'number of classes in the model')
 
 def main(args):
   physical_devices = tf.config.experimental.list_physical_devices('GPU')
+
   for physical_device in physical_devices:
     tf.config.experimental.set_memory_growth(physical_device, True)
   
@@ -34,6 +36,8 @@ def main(args):
   times = []
 
   vid = cv2.VideoCapture(0)
+
+  out = None
 
   if FLAGS.output:
     width = int(vid.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -69,7 +73,7 @@ def main(args):
     if cv2.waitKey(1) == ord('q'):
       break
 
-    cv2.destroyAllWindows()
+  cv2.destroyAllWindows()
 
 if __name__ == '__main__':
   try:
